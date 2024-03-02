@@ -1,0 +1,34 @@
+node_groups:
+  - name: group_a
+    nodes_count: 10 # amount of nodes to be found
+    free_cpu: 2 # number of logical cores
+    free_mru: 16 # amount of memory in GB
+    free_ssd: 100 # amount of ssd storage in GB
+    dedicated: false # are nodes dedicated
+    public_ip4: true # should the nodes have free ip v4
+    public_ip6: false # should the nodes have free ip v6
+    certified: true # should the nodes be certified(if false the nodes could be certified or DIY) 
+    region: "europe" # region could be the name of the continents the nodes are located in (africa, americas, antarctic, antarctic ocean, asia, europe, oceania, polar)
+vms:
+  - name: examplevm
+    vms_count: 100 # amount of vms with the same configurations
+    node_group: group_a # the name of the predefined group of nodes
+    cpu: 1 # number of logical cores, min 1, max 32
+    mem: .25 # amount of memory in GB, min 0.25 GB, max 256 GB
+    public_ip4: false
+    public_ip6: false
+    planetary: true
+    flist: https://hub.grid.tf/scott.3bot/scottyeager-graph-getter-latest.flist
+    entry_point: /get.sh
+    root_size: 0 # root size in GB, 0 for default root size, max 10TB
+    ssh_key: key1 # the name of the predefined ssh key
+    env_vars:
+      IP: http://[VMs will try to GET this address]
+      PORT: 5000
+      SLEEP: 2 # Wait time between GETs
+
+ssh_keys: # map of ssh keys with key=name and value=the actual ssh key
+  key1: ssh-ed25519 AAABCD-yoursshpublickey 
+mnemonic: yer sekret werds heer
+network: main # eg: main, test, qa, dev
+max_retries: 5 # max retries for each node group (default 5)

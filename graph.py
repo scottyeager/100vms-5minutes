@@ -3,6 +3,8 @@ import requests
 import plotext
 from flask import Flask, request
 
+TIMEOUT=10
+
 plotext.plot_size(20)
 plotext.bar(['VMs'], [1], width = .1)
 plotext.ylim(0, 100)
@@ -21,7 +23,7 @@ def checkin():
 
 @app.route("/refresh")
 def refresh():
-    active = len([ip for ip, last in app.ips.items() if last > time.time() - 10])
+    active = len([ip for ip, last in app.ips.items() if last > time.time() - TIMEOUT])
     if active == 1:
         plotext.bar(['1 VM'], [1])
     else:
